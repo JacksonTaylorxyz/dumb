@@ -266,6 +266,14 @@ footer a:hover {
 	}
 }
 
+#album-tracklist{
+	display: flex;
+	flex-direction: column;
+	padding-left: 10em;
+	padding-right: 10em;
+	gap: 1rem;
+}
+
 #search-input {
 	width: 100%;
 	padding: 1rem 2rem;
