@@ -11,12 +11,13 @@ import (
 )
 
 type song struct {
-	Artist  string
-	Title   string
-	Image   string
-	Lyrics  string
-	Credits map[string]string
-	About   [2]string
+	Artist      string
+	Title       string
+	Image       string
+	Lyrics      string
+	Credits     map[string]string
+	About       [2]string
+	LinkToAlbum string
 }
 
 type songResponse struct {
@@ -27,6 +28,9 @@ type songResponse struct {
 			Title       string
 			Description struct {
 				Plain string
+			}
+			Album struct {
+				Url string `json:"url"`
 			}
 			CustomPerformances []customPerformance `json:"custom_performances"`
 		}
@@ -54,6 +58,7 @@ func (s *song) parseSongData(doc *goquery.Document) {
 	attr, exists := doc.Find("meta[property='twitter:app:url:iphone']").Attr("content")
 	if exists {
 		songID := strings.Replace(attr, "genius://songs/", "", 1)
+
 		u := fmt.Sprintf("https://genius.com/api/songs/%s?text_format=plain", songID)
 
 		res, err := sendRequest(u)
@@ -77,6 +82,7 @@ func (s *song) parseSongData(doc *goquery.Document) {
 		s.About[0] = songData.Description.Plain
 		s.About[1] = truncateText(songData.Description.Plain)
 		s.Credits = make(map[string]string)
+		s.LinkToAlbum = strings.Replace(songData.Album.Url, "https://genius.com", "", -1)
 
 		for _, perf := range songData.CustomPerformances {
 			var artists []string
