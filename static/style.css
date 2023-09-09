@@ -101,7 +101,7 @@ a {
 	font-weight: 500;
 }
 
-#metadata > img {
+#metadata > img, #metadata > a > img {
 	width: 20rem;
 	border-radius: 3px;
 	box-shadow: 0 1px 1px #ddd;
@@ -269,9 +269,14 @@ footer a:hover {
 #album-tracklist{
 	display: flex;
 	flex-direction: column;
-	padding-left: 10em;
-	padding-right: 10em;
 	gap: 1rem;
+}
+
+@media screen and (min-width: 800px) {
+  #album-tracklist{
+	  padding-left: 6em;
+	  padding-right: 6em;
+  }
 }
 
 #search-input {
